@@ -1,0 +1,114 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Scenes/GameState3.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Tilesets/Background.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Tilesets/Real_Tileset.png" type="Texture" id=3]
+[ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/04B_03__.ttf" type="DynamicFontData" id=5]
+
+[sub_resource type="ConvexPolygonShape2D" id=1]
+points = PoolVector2Array( 0, 15, 34, 15, 34, 17, 0, 17 )
+
+[sub_resource type="TileSet" id=2]
+0/name = "Horizontal"
+0/texture = ExtResource( 3 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 34, 32 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 1 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+0/z_index = 0
+
+[sub_resource type="ConvexPolygonShape2D" id=3]
+points = PoolVector2Array( 0, 0, 2, 0, 2, 32, 0, 32 )
+
+[sub_resource type="TileSet" id=4]
+0/name = "Vertical"
+0/texture = ExtResource( 3 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 34, 0, 32, 32 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 3 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+0/z_index = 0
+
+[sub_resource type="DynamicFont" id=5]
+size = 30
+font_data = ExtResource( 5 )
+
+[node name="GameState3" type="Node"]
+script = ExtResource( 1 )
+
+[node name="Level" type="Node2D" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="Level"]
+margin_left = -512.0
+margin_top = -512.0
+margin_right = 1536.0
+margin_bottom = 1536.0
+texture = ExtResource( 2 )
+expand = true
+
+[node name="TileMap" type="TileMap" parent="Level"]
+tile_set = SubResource( 2 )
+cell_size = Vector2( 32, 32 )
+collision_layer = 5
+collision_mask = 5
+format = 1
+
+[node name="TileMap2" type="TileMap" parent="Level"]
+position = Vector2( 0, 16 )
+tile_set = SubResource( 4 )
+cell_size = Vector2( 32, 32 )
+collision_layer = 5
+collision_mask = 5
+format = 1
+
+[node name="Player" parent="Level" instance=ExtResource( 4 )]
+
+[node name="Player2" parent="Level" instance=ExtResource( 4 )]
+player_id = "2"
+
+[node name="Player3" parent="Level" instance=ExtResource( 4 )]
+player_id = "3"
+
+[node name="Camera2D" type="Camera2D" parent="Level"]
+current = true
+
+[node name="Timer" type="Timer" parent="Level"]
+wait_time = 3.0
+one_shot = true
+
+[node name="Timer2" type="Timer" parent="Level"]
+wait_time = 3.0
+one_shot = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Level"]
+
+[node name="Label" type="Label" parent="Level/CanvasLayer"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_top = -307.0
+margin_bottom = -276.0
+custom_fonts/font = SubResource( 5 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+align = 1
+[connection signal="timeout" from="Level/Timer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="Level/Timer2" to="." method="_on_Timer2_timeout"]

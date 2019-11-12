@@ -16,15 +16,25 @@ func spawn(pos, dir, player):
 	rotation = dir
 	position = pos
 	velocity = Vector2(0, -speed).rotated(rotation)
+	rotation = 0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _physics_process(delta):
+	rotation = 0
 	var collision = move_and_collide(velocity * delta)
 	if collision:
-		velocity = velocity.bounce(collision.normal)
+		velocity =velocity.bounce(collision.normal)
+		
 		if collision.collider.has_method("hit"):
 			collision.collider.hit()
 			hit()
+	
+	
+#	if $Down.is_colliding() or $Up.is_colliding():
+#		velocity.y = -velocity.y
+#	if $Left.is_colliding() or $Right.is_colliding():
+#		velocity.x = -velocity.x
+#	position -= Vector2(velocity.x / velocity.x, velocity.y / velocity.y).rotated(rotation)
 
 func hit():
 	if get_parent().get_node(true_parent):

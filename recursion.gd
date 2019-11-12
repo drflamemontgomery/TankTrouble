@@ -23,7 +23,7 @@ func generate():
 		self.maze.connections(location, direction)
 		location = self.maze.delta(location, direction)
 		self.stack.push_back(location)
-	for i in range(self.maze.size.x * self.maze.size.y*2.5):
+	for i in range(self.maze.size.x * self.maze.size.y*(randi()%3+1)):
 		var location = Vector2(randi() % int(self.maze.size.x), randi() % int(self.maze.size.y))
 		#print_debug(self.maze.rooms)
 		if self.maze.rooms[location].connected():

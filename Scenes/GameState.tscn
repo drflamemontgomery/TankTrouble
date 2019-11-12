@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://GameState.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Tilesets/Background.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Tilesets/Real_Tileset.png" type="Texture" id=3]
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Assets/04B_03__.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://Scenes/Laika.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Assets/04B_03__.ttf" type="DynamicFontData" id=6]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 15, 34, 15, 34, 17, 0, 17 )
@@ -50,7 +51,7 @@ points = PoolVector2Array( 0, 0, 2, 0, 2, 32, 0, 32 )
 
 [sub_resource type="DynamicFont" id=5]
 size = 30
-font_data = ExtResource( 5 )
+font_data = ExtResource( 6 )
 
 [node name="GameState1" type="Node"]
 script = ExtResource( 1 )
@@ -82,6 +83,8 @@ format = 1
 
 [node name="Player" parent="Level" instance=ExtResource( 4 )]
 
+[node name="Laika" parent="Level" instance=ExtResource( 5 )]
+
 [node name="Camera2D" type="Camera2D" parent="Level"]
 current = true
 
@@ -99,10 +102,12 @@ one_shot = true
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_top = -307.0
-margin_bottom = -276.0
+margin_top = -15.5
+margin_bottom = 15.5
 custom_fonts/font = SubResource( 5 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 align = 1
+
+[node name="Navigation2D" type="Navigation2D" parent="Level"]
 [connection signal="timeout" from="Level/Timer" to="." method="_on_Timer_timeout"]
 [connection signal="timeout" from="Level/Timer2" to="." method="_on_Timer2_timeout"]

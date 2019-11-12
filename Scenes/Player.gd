@@ -8,6 +8,7 @@ var velocity = Vector2()
 var rotation_dir = 0
 var ball_count = 0
 var ball_max = 6
+var rotating = ""
 
 func _ready():
 	$AnimatedSprite.animation = "Player%s" % player_id
@@ -21,9 +22,11 @@ func get_input():
 	var shoot = Input.is_action_just_pressed("shoot%s" % player_id)
 	
 	if left:
-		rotation_dir -= 1
+		#rotation_dir -= 1
+		rotating = "left"
 	if right:
-		rotation_dir += 1
+		#rotation_dir += 1
+		rotating = "right"
 	if up:
 		velocity = Vector2(0, -speed).rotated(rotation)
 		#velocity *= get_parent().scale
@@ -33,6 +36,8 @@ func get_input():
 	if shoot && ball_count < ball_max:
 		spawn_ball()
 		ball_count += 1
+	if !right and !left:
+		rotating = null
 
 
 func spawn_ball():
@@ -44,16 +49,29 @@ func spawn_ball():
 	get_parent().add_child(b)
 func _process(delta):
 	if $AnimatedSprite.animation != "PlayerDead":
+		if get_parent().get_filename() == "res://Scenes/Gamestate.tscn":
+			get_parent().p1_cell = Vector2(int(position.x/32), int(position.y/32))
 		get_input()
-		rotation = rotation_dir * rotation_speed# * delta
+		#rotation = rotation_dir * rotation_speed# * delta
 		velocity = move_and_slide(velocity)
 		return
+	rotation = 0
+	$Timer.stop()
 	if $AnimatedSprite.animation == "PlayerDead" and $AnimatedSprite.get_frame() == 4:
 		queue_free()
 
 
 func hit():
 	$CollisionShape2D.disabled = true
-	rotation_dir = 0
+	#rotation_dir = 0
 	rotation = 0
 	$AnimatedSprite.animation = "PlayerDead"
+
+func _on_Timer_timeout():
+	if rotating == "left":
+		var rotating_deg = 5
+		rotation_degrees -= 5
+		#rotation -= 0.1
+	if rotating == "right":
+		var rotating_deg = 5
+		rotation_degrees += 5

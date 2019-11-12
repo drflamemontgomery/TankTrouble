@@ -33,13 +33,15 @@ func run():
 	#print_debug(randi())
 	var p1_spawn = Vector2(randi()%int(maze.size.x)*32+16, randi()%int(maze.size.y)*32+32)
 	rc.generate()
-	var p2_spawn = Vector2(randi()%int(maze.size.x)*32+16, randi()%int(maze.size.y)*32+32)
+	var p2_spawn = p1_spawn
+	while p2_spawn == p1_spawn:
+		p2_spawn = Vector2(randi()%int(maze.size.x)*32+16, randi()%int(maze.size.y)*32+32)
 	#debug_render(maze)
 	render_maze(maze)
 	maze.output()
 	$Level/Player.position = p1_spawn
 	$Level/Player2.position = p2_spawn
-	$Level/Camera2D.position = Vector2((maze.size.x*32)/2+1, ((maze.size.y*32)/2)+64)
+	$Level/Camera2D.position = Vector2((maze.size.x*32)/2+64, ((maze.size.y*32)/2)+64)
 #	if maze.size.y > maze.size.x:
 	$Level/Camera2D.zoom = Vector2(maze.size.y / 15, maze.size.y / 15)
 	print_debug($Level/Camera2D.position)
@@ -84,10 +86,10 @@ func render_maze(maze):
 				horizontal.set_cell(x, y+1, htile)
 			if wall(maze.room(Vector2(x, y)), right):
 				vertical.set_cell(x+1, y, vtile)
-			if wall(maze.room(Vector2(x, y)), up):
-				horizontal.set_cell(x, y, htile)
-			if wall(maze.room(Vector2(x, y)), left):
-				vertical.set_cell(x, y, vtile)
+			#if wall(maze.room(Vector2(x, y)), up):
+			#	horizontal.set_cell(x, y, htile)
+			#if wall(maze.room(Vector2(x, y)), left):
+			#	vertical.set_cell(x, y, vtile)
 
 func wall(room, direction):
 	if room == null:

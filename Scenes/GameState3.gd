@@ -45,7 +45,7 @@ func run():
 	$Level/Player2.position = p2_spawn
 	randomize()
 	$Level/Player3.position = p3_spawn
-	$Level/Camera2D.position = Vector2((maze.size.x*32)/2+1, ((maze.size.y*32)/2)+64)
+	$Level/Camera2D.position = Vector2((maze.size.x*32)/2+64, ((maze.size.y*32)/2)+64)
 #	if maze.size.y > maze.size.x:
 	$Level/Camera2D.zoom = Vector2(maze.size.y / 15, maze.size.y / 15)
 	print_debug($Level/Camera2D.position)
